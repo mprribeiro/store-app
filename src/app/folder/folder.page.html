@@ -15,7 +15,27 @@
   </ion-header>
 
   <div id="container">
-    <strong class="capitalize">{{ folder }}</strong>
-    <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <p> {{ folder }} </p>
+    <img src="assets/icon/favicon.png" alt='logo'>
+
+    <div *ngIf="folder === 'Inbox'">
+    </div>
+
+    <div *ngIf="folder === 'Outbox'">
+    </div>
+
+    <div *ngIf="folder === 'Favorites'">
+    </div> 
+    
+    <div *ngIf="folder === 'Archived'">
+    </div>
+
+    <div *ngIf="folder === 'Trash'">
+    </div>
+
+    <div *ngIf="folder === 'Spam'">
+    </div>
+    
+    
   </div>
 </ion-content>
