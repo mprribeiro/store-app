@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -7,12 +8,16 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  public login: string;
+  public log: string;
 
-  constructor(private activatedRoute: ActivatedRoute) { }
+  constructor(private activatedRoute: ActivatedRoute, public navCtrl: NavController) { }
 
+  login() {
+    this.navCtrl.navigateRoot('/categories');
+  }
+    
   ngOnInit() {
-    this.login = this.activatedRoute.snapshot.paramMap.get('id');
+    this.log = this.activatedRoute.snapshot.paramMap.get('id');
   }
 
 }

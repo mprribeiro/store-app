@@ -14,9 +14,15 @@ export class AppComponent implements OnInit {
   public appPages = [
     {
       title: 'Login',
-      url: '/login',
-    }    
+      url: '',
+      icon: 'login',
+    },
+    {
+      title: 'Categories',
+      url: '/categories',
+    }
   ];
+
 
   constructor(
     private platform: Platform,
@@ -34,7 +40,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    const path = window.location.pathname.split('login/')[1];
+    const path = window.location.pathname.split('/')[1];
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
