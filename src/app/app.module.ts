@@ -1,3 +1,5 @@
+import { StorageService } from './../services/storage.service';
+import { AuthService } from './../services/auth.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http'
@@ -10,6 +12,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CategoryService } from 'src/services/domain/category.service';
+import { ErrorInterceptorProvider } from 'src/interceptors/error-interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,7 +27,10 @@ import { CategoryService } from 'src/services/domain/category.service';
     StatusBar,
     SplashScreen,
     CategoryService,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    ErrorInterceptorProvider,
+    AuthService,
+    StorageService
   ],
   bootstrap: [AppComponent]
 })

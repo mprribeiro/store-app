@@ -6,12 +6,12 @@
 
       <form>
         <ion-item>
-          <ion-input type="text" placeholder="Email"></ion-input>
+          <ion-input [(ngModel)]="creds.email" name="email" type="text" placeholder="Email"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-input type="password" placeholder="Password"></ion-input>
+          <ion-input [(ngModel)]="creds.password" name="password" type="password" placeholder="Password"></ion-input>
         </ion-item>
-        <ion-button color="dark" expand="block" routerLink="/categories">Login</ion-button>
+        <ion-button color="dark" expand="block" (click)="login()">Login</ion-button>
       </form>
 
       <ion-button color="medium" expand="block" fill="outline">Register</ion-button>
