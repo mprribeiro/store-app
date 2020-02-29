@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CategoryService } from 'src/services/domain/category.service';
 import { ErrorInterceptorProvider } from 'src/interceptors/error-interceptor';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,6 +21,7 @@ import { ErrorInterceptorProvider } from 'src/interceptors/error-interceptor';
   imports: [
     BrowserModule,
     HttpClientModule,
+    HttpModule,
     IonicModule.forRoot(),
     AppRoutingModule,
   ],
