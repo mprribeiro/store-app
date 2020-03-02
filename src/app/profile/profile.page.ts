@@ -1,3 +1,5 @@
+import { ClientService } from './../../services/domain/client.service';
+import { ClientDTO } from './../../models/client.dto';
 import { StorageService } from './../../services/storage.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,9 +10,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfilePage implements OnInit {
 
-  email: String;
+  client: ClientDTO;
 
-  constructor(public storage: StorageService) { }
+  constructor(public storage: StorageService, public clientService: ClientService) { }
 
   ngOnInit() {
   }
@@ -18,7 +20,11 @@ export class ProfilePage implements OnInit {
   ionViewWillEnter() {
     let localUser = this.storage.getLocalUser();
     if (localUser && localUser.email) {
-      this.email = localUser.email;
+      this.clientService.fiendByEmail(localUser.email)
+      .subscribe(response => {
+        this.client = response;
+      },
+      error => {})
     }
   }
 

@@ -1,3 +1,4 @@
+import { ClientService } from './../services/domain/client.service';
 import { StorageService } from './../services/storage.service';
 import { AuthService } from './../services/auth.service';
 import { NgModule } from '@angular/core';
@@ -32,7 +33,8 @@ import { HttpModule } from '@angular/http';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     ErrorInterceptorProvider,
     AuthService,
-    StorageService
+    StorageService,
+    ClientService
   ],
   bootstrap: [AppComponent]
 })
