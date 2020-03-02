@@ -8,9 +8,13 @@
 </ion-header>
 
 <ion-content>
-  <ion-avatar>
-    <img class="circle" [src]="client?.imageUrl || 'assets/icon/user.jpg'">
-  </ion-avatar>
-  <h2 text-center>{{client?.name}}</h2>
-  <p text-center>{{client?.email}}</p>
+  <ion-card>
+    <ion-avatar>
+      <img [src]="client?.imageUrl || 'assets/icon/user.jpg'">
+    </ion-avatar>
+    <ion-card-header>
+      <ion-card-title>{{client?.name}}</ion-card-title>
+      <ion-card-subtitle>{{client?.email}}</ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
 </ion-content>

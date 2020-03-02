@@ -1,8 +1,13 @@
-page-profile {
+img {
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    margin-left: -15px;
+}
 
-    .circle {
-        width: 60%;
-        border-radius: 100%;
-        margin: 25px auto 0 auto;
-    }
+ion-card {
+    display: flex;
+    justify-content: center;
 }

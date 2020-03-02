@@ -15,6 +15,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { CategoryService } from 'src/services/domain/category.service';
 import { ErrorInterceptorProvider } from 'src/interceptors/error-interceptor';
 import { HttpModule } from '@angular/http';
+import { AuthInterceptorProvider } from 'src/interceptors/auth-interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,6 +32,7 @@ import { HttpModule } from '@angular/http';
     SplashScreen,
     CategoryService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    AuthInterceptorProvider,
     ErrorInterceptorProvider,
     AuthService,
     StorageService,
