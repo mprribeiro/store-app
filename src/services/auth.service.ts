@@ -51,16 +51,18 @@ export class AuthService {
     async logout(page: string) {
         const alert = await this.alertCtrl.create({
             subHeader: 'Logout',
-            message: 'Is that what you really want?',
+            message: 'Are you sure?',
             backdropDismiss: false,
             buttons: [
-                {   text: 'Yes, it is.',
+                {   text: 'Yes, I am.',
                     handler: () => {
                         this.storage.setLocalUser(null);
                         this.navCtrl.navigateRoot(page);
                     }
                 },
-                {text: 'Cancel'}
+                {
+                    text: 'Cancel'
+                }
             ]
         });
         await alert.present();

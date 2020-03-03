@@ -13,7 +13,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 })
 export class AppComponent {
   public selectedIndex = 0;
-  public appPages = [
+  public pages = [
     {
       title: 'Categories',
       url: '/categories',
