@@ -1,3 +1,4 @@
+import { AlertController, NavController } from '@ionic/angular';
 import { StorageService } from './storage.service';
 import { LocalUser } from './../models/local_user';
 import { API_CONFIG } from './../config/api.config';
@@ -11,7 +12,11 @@ export class AuthService {
 
     jwtHelper: JwtHelper = new JwtHelper();
 
-    constructor(public http: HttpClient, public storage: StorageService) {
+    constructor(
+        public http: HttpClient, 
+        public storage: StorageService, 
+        public alertCtrl: AlertController,
+        public navCtrl: NavController) {
     }
 
     authenticate(creds: CredentialsDTO) {
@@ -24,7 +29,17 @@ export class AuthService {
             });
     }
 
-    successfilLogin(authorizationValue: String) {
+    refreshToken() {
+        return this.http.post(
+            `${API_CONFIG.baseUrl}/auth/refresh_token`, 
+            {},
+            {
+                observe: 'response',
+                responseType: 'text'
+            });
+    }
+
+    successfulLogin(authorizationValue: String) {
         let token = authorizationValue.substring(7);
         let user : LocalUser = {
             token: token,
@@ -33,7 +48,21 @@ export class AuthService {
         this.storage.setLocalUser(user);
     }
 
-    logout() {
-        this.storage.setLocalUser(null);
+    async logout(page: string) {
+        const alert = await this.alertCtrl.create({
+            subHeader: 'Logout',
+            message: 'Is that what you really want?',
+            backdropDismiss: false,
+            buttons: [
+                {   text: 'Yes, it is.',
+                    handler: () => {
+                        this.storage.setLocalUser(null);
+                        this.navCtrl.navigateRoot(page);
+                    }
+                },
+                {text: 'Cancel'}
+            ]
+        });
+        await alert.present();
     }
 }

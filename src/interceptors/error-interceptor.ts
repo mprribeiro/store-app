@@ -5,52 +5,70 @@ import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AlertController } from '@ionic/angular';
 
+
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
     constructor(public storage: StorageService, public alertCtrl: AlertController) {
     }
 
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>{
         return next.handle(req)
                 .pipe(
                     catchError(error => {
                         let errorObj = error;
-                        if(errorObj.error ){
+                        if (errorObj.error) {
+                            errorObj = errorObj.error;
+                        }
+                        if (!errorObj.status) {
+                            errorObj = JSON.parse(errorObj);
+                        }
+
+                        switch(errorObj.status){
+                            case 403: 
+                            this.handle403();
+                            break;
+
+                            case 401: 
+                            this.handle401();
+                            break;
+
+                            default:
+                            this.handleDefaultError(error);
+                        }
  
-                           errorObj = errorObj.error;
-                        }
-                        if(!errorObj.status){
-                            errorObj = JSON.parse(errorObj.error);
-                        }
-                        console.log(errorObj);
-
-                        switch(errorObj.status) {
-                            case 401:
-                                this.handle401();
-                                break;
-                            case 403:
-                                this.handle403();
-                                break;
-                        }
-                       
-                        return Observable.throw(errorObj);
+                        return Observable.throw(error);
                     })) as any;
-    }
-
-    handle403() {
-        this.storage.setLocalUser(null);
     }
 
     async handle401() {
         const alert = await this.alertCtrl.create({
-            header: 'Error 401: Authentication Failure',
+            subHeader: 'Error 401: Authentication Failure',
             message: 'Email or password incorrect',
             backdropDismiss: false,
             buttons: ['Ok']
         });
         await alert.present();
     }
+
+    handle403() {
+        this.storage.setLocalUser(null);
+    }
+
+    async handleDefaultError(errorObj) {
+        let alert = await this.alertCtrl.create({
+            header: 'Erro ' + errorObj.status + ': ' + errorObj.error,
+            message: errorObj.message,
+            backdropDismiss: false,
+            buttons: [
+                {
+                    text: 'Ok'
+                }
+            ]
+        });
+        await alert.present();        
+    }
+
 }
 
 export const ErrorInterceptorProvider = {

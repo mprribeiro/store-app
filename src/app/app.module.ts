@@ -31,12 +31,12 @@ import { AuthInterceptorProvider } from 'src/interceptors/auth-interceptor';
     StatusBar,
     SplashScreen,
     CategoryService,
+    StorageService,
+    AuthService,
+    ClientService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AuthInterceptorProvider,
-    ErrorInterceptorProvider,
-    AuthService,
-    StorageService,
-    ClientService
+    ErrorInterceptorProvider
   ],
   bootstrap: [AppComponent]
 })

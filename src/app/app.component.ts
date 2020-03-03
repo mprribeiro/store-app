@@ -1,6 +1,8 @@
+import { StorageService } from './../services/storage.service';
+import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
@@ -9,7 +11,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   public selectedIndex = 0;
   public appPages = [
     {
@@ -19,6 +21,10 @@ export class AppComponent implements OnInit {
     {
       title: 'Profile',
       url: '/profile'
+    },
+    {
+      title: 'Logout',
+      url: ''
     }
   ];
 
@@ -26,7 +32,9 @@ export class AppComponent implements OnInit {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private authService: AuthService, 
+    private navCtrl: NavController,
   ) {
     this.initializeApp();
   }
@@ -38,10 +46,14 @@ export class AppComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    const path = window.location.pathname.split('/')[1];
-    if (path !== undefined) {
-      this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
+  openPage(page : {title: String, url: string}) {
+    switch (page.title) {
+      case 'Logout':
+        this.authService.logout(page.url);
+        break;
+      
+      default:
+        this.navCtrl.navigateRoot(page.url);
     }
   }
 }

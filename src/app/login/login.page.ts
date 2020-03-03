@@ -30,6 +30,14 @@ export class LoginPage implements OnInit {
   ionViewWillEnter() {
     this.menu.swipeGesture(false);
   }
+  ionViewDidEnter() {
+    this.auth.refreshToken()
+    .subscribe(response => {
+      this.auth.successfulLogin(response.headers.get('Authorization'));
+      this.navCtrl.navigateRoot('/categories');
+    },
+    error => {});
+  }
 
   ionViewDidLeave() {
     this.menu.swipeGesture(true);
@@ -37,7 +45,7 @@ export class LoginPage implements OnInit {
 
   login() {
     this.auth.authenticate(this.creds).subscribe(response => {
-      this.auth.successfilLogin(response.headers.get('Authorization'));
+      this.auth.successfulLogin(response.headers.get('Authorization'));
       this.navCtrl.navigateRoot('/categories');
     },
     error => {})
