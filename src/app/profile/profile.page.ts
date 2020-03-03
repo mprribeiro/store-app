@@ -1,3 +1,4 @@
+import { NavController } from '@ionic/angular';
 import { ClientService } from './../../services/domain/client.service';
 import { ClientDTO } from './../../models/client.dto';
 import { StorageService } from './../../services/storage.service';
@@ -12,7 +13,8 @@ export class ProfilePage implements OnInit {
 
   client: ClientDTO;
 
-  constructor(public storage: StorageService, public clientService: ClientService) { }
+  constructor(public storage: StorageService, public clientService: ClientService,
+    public navCtrl: NavController) { }
 
   ngOnInit() {
   }
@@ -24,7 +26,13 @@ export class ProfilePage implements OnInit {
       .subscribe(response => {
         this.client = response;
       },
-      error => {})
+      error => {
+        if (error.status == 403) {
+          this.navCtrl.navigateRoot("");
+        }
+      })
+    } else {
+      this.navCtrl.navigateRoot("");
     }
   }
 
