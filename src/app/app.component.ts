@@ -23,11 +23,14 @@ export class AppComponent {
       url: '/profile'
     },
     {
+      title: 'Products',
+      url: '/products'
+    },
+    {
       title: 'Logout',
       url: ''
     }
   ];
-
 
   constructor(
     private platform: Platform,
