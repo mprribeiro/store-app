@@ -2,6 +2,7 @@ import { NavController } from '@ionic/angular';
 import { CategoryDTO } from './../../models/category.dto';
 import { CategoryService } from './../../services/domain/category.service';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-categories',
@@ -12,7 +13,8 @@ export class CategoriesPage {
 
   items: CategoryDTO[];
 
-  constructor(public categoryService: CategoryService, public navCtrl: NavController) { }
+  constructor(public categoryService: CategoryService, public navCtrl: NavController,
+    public router: Router) { }
 
   ionViewWillEnter() {
     this.categoryService.findAll()
@@ -21,8 +23,10 @@ export class CategoriesPage {
     error => {});
   }
 
-  showProducts() {
-    this.navCtrl.navigateRoot("/products");
+  showProducts(category_id: string) {
+    let data = JSON.stringify(category_id);
+    this.router.navigate(['/products', data]);
+
   }
 
 }

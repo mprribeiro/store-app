@@ -1,3 +1,5 @@
+import { ProductService } from './../../services/domain/product.service';
+import { ActivatedRoute } from '@angular/router';
 import { ProductDTO } from './../../models/product.dto';
 import { Component, OnInit } from '@angular/core';
 
@@ -10,24 +12,17 @@ export class ProductsPage implements OnInit {
 
   items: ProductDTO[];
 
-  constructor() { }
+  constructor(public activateRoute: ActivatedRoute, public productService: ProductService) { }
 
   ngOnInit() {
   }
 
   ionViewDidEnter() {
-    this.items = [
-      {
-        id: "1",
-        name: "Mouse",
-        price: 80.99
+    let category_id = this.activateRoute.snapshot.paramMap.get('data');
+    this.productService.findByCategory(category_id)
+      .subscribe(response => {
+        this.items = response['content'];
       },
-      {
-        id: "2",
-        name: "Teclado",
-        price: 100.00
-      }
-    ]
-  };
-
+        error => { });
+  }
 }

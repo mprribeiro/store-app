@@ -1,3 +1,4 @@
+import { ProductService } from './../services/domain/product.service';
 import { ClientService } from './../services/domain/client.service';
 import { StorageService } from './../services/storage.service';
 import { AuthService } from './../services/auth.service';
@@ -36,6 +37,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     StorageService,
     AuthService,
     ClientService,
+    ProductService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AuthInterceptorProvider,
     ErrorInterceptorProvider
