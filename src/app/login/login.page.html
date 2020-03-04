@@ -2,7 +2,9 @@
   <ion-row justify-content-center align-items-center style="height: 100%; flex-direction: column">
     <div text-center>
 
-      <img src="assets/icon/m.jpg" alt='logo'>
+      <h1 style="text-align: center; font-weight: bolder; font-family: cursive;">Pulse Generation</h1>
+
+      <img src="assets/icon/logo.jpg" alt='logo'>
 
       <form>
         <ion-item>
@@ -14,8 +16,9 @@
         <ion-button color="dark" expand="block" (click)="login()">Login</ion-button>
       </form>
 
-      <ion-button color="medium" expand="block" fill="outline">Register</ion-button>
+      <ion-button color="medium" expand="block" fill="outline" routerLink="/signup">Register</ion-button>
 
     </div>
+    <!--ion-icon name="logo-android" size="large"></ion-icon-->
   </ion-row>
 </ion-grid>

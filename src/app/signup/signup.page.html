@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-row>
+      <ion-button color="dark" routerLink="">
+        <ion-icon name="return-down-back-outline"></ion-icon>
+      </ion-button>
+      <ion-title>Signup</ion-title>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <form (ngSubmit)="signupUser(); $event.preventDefault()">
+    <ion-item>
+      <ion-input name="name" type="text" placeholder="Name*"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input name="email" type="text" placeholder="Email*"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked style="color:gray;">Type*</ion-label>
+      <ion-select name="type">
+        <ion-select-option value="1">Person</ion-select-option>
+        <ion-select-option value="2">Company</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-input name="register" type="text" placeholder="CPF or CNPJ*"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input name="password" type="password" placeholder="Password*"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input name="street" type="text" placeholder="Street*"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input name="number" type="text" placeholder="Number*"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input name="complement" type="text" placeholder="Complement"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input name="neighborhood" type="text" placeholder="Neighborhood"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input name="cep" type="text" placeholder="CEP*"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input name="phone1" type="text" placeholder="Phone 1*"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input name="phone2" type="text" placeholder="Phone 2"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input name="phone3" type="text" placeholder="Phone 3"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked style="color:gray;">State*</ion-label>
+      <ion-select name="stateId">
+        <ion-select-option value="1">Minas Gerais</ion-select-option>
+        <ion-select-option value="2">São Paulo</ion-select-option>
+        <ion-select-option value="3">Rio de Janeiro</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked style="color:gray;">City*</ion-label>
+      <ion-select name="cityId">
+        <ion-select-option value="1">Uberlândia</ion-select-option>
+        <ion-select-option value="2">Campinas</ion-select-option>
+        <ion-select-option value="3">Rio de Janeiro</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-button block type="submit">Create account</ion-button>
+  </form>
+</ion-content>
