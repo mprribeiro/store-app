@@ -1,3 +1,5 @@
+import { StateService } from './../../services/domain/state.service';
+import { CityService } from './../../services/domain/city.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -14,8 +16,12 @@ import { SignupPage } from './signup.page';
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    SignupPageRoutingModule
+    SignupPageRoutingModule,
   ],
-  declarations: [SignupPage]
+  declarations: [SignupPage],
+  providers: [
+    CityService,
+    StateService
+  ]
 })
 export class SignupPageModule {}

@@ -16,6 +16,7 @@ import { CategoryService } from 'src/services/domain/category.service';
 import { ErrorInterceptorProvider } from 'src/interceptors/error-interceptor';
 import { HttpModule } from '@angular/http';
 import { AuthInterceptorProvider } from 'src/interceptors/auth-interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +27,7 @@ import { AuthInterceptorProvider } from 'src/interceptors/auth-interceptor';
     HttpModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     StatusBar,

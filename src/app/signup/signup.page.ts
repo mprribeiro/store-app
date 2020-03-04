@@ -1,3 +1,9 @@
+import { AlertController, NavController } from '@ionic/angular';
+import { ClientService } from './../../services/domain/client.service';
+import { CityDTO } from './../../models/city.dto';
+import { StateDTO } from './../../models/state.dto';
+import { StateService } from './../../services/domain/state.service';
+import { CityService } from './../../services/domain/city.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -9,8 +15,15 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class SignupPage implements OnInit {
 
   formGroup: FormGroup;
+  states: StateDTO[];
+  cities: CityDTO[];
 
-  constructor(public formBuilder: FormBuilder) { 
+  constructor(public formBuilder: FormBuilder,
+    public cityService: CityService,
+    public stateService: StateService,
+    public clientService: ClientService,
+    public alertCtrl: AlertController,
+    public navCtrl: NavController) { 
     this.formGroup = this.formBuilder.group({
       name: ['Thomas' , [Validators.required, Validators.minLength(5), Validators.maxLength(120)]],
       email: ['thomas@gmail.com.br', [Validators.required, Validators.email]],
@@ -25,8 +38,8 @@ export class SignupPage implements OnInit {
       phone1 : ['977261827', [Validators.required]],
       phone2 : ['', []],
       phone3 : ['', []],
-      stateId : ['3', [Validators.required]],
-      cityId : ['3', [Validators.required]]      
+      stateId : [null, [Validators.required]],
+      cityId : [null, [Validators.required]]      
     });
   }
 
@@ -34,7 +47,42 @@ export class SignupPage implements OnInit {
   }
 
   signupUser() {
-    console.log("enviou o form");
+    this.clientService.insert(this.formGroup.value).subscribe(response => {
+      this.showInsertOk();
+    })
   }
+
+  ionViewDidEnter() {
+    this.stateService.findAll()
+    .subscribe(response => {
+      this.states = response;
+    },
+    error => {})
+  }
+
+  updateCities() {
+    let state_id = this.formGroup.value.stateId;
+    this.cityService.findAll(state_id).subscribe(response => {
+      this.cities = response;
+      this.formGroup.controls.cityId.setValue(null);
+    },
+    error => {})
+  }
+
+  async showInsertOk() {
+    const alert = await this.alertCtrl.create({
+        subHeader: 'Success',
+        message: 'Registered with success!',
+        backdropDismiss: false,
+        buttons: [
+            {   text: 'Ok',
+                handler: () => {
+                  this.navCtrl.pop();
+                }
+            }
+        ]
+    });
+    await alert.present();
+}
 
 }

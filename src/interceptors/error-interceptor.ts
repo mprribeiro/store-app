@@ -1,7 +1,8 @@
+import { FieldMessage } from './../models/fieldmessage';
 import { StorageService } from './../services/storage.service';
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Rx';
 import { catchError } from 'rxjs/operators';
 import { AlertController } from '@ionic/angular';
 
@@ -33,11 +34,15 @@ export class ErrorInterceptor implements HttpInterceptor {
                             this.handle401();
                             break;
 
+                            case 422:
+                            this.handle422(errorObj);
+                            break;
+
                             default:
-                            this.handleDefaultError(error);
+                            this.handleDefaultError(errorObj);
                         }
  
-                        return Observable.throw(error);
+                        return Observable.throw(errorObj);
                     })) as any;
     }
 
@@ -55,6 +60,16 @@ export class ErrorInterceptor implements HttpInterceptor {
         this.storage.setLocalUser(null);
     }
 
+    async handle422(errorObj) {
+        const alert = await this.alertCtrl.create({
+            subHeader: 'Error 422: Validation Error',
+            message: this.listErrors(errorObj.error),
+            backdropDismiss: false,
+            buttons: ['Ok']
+        });
+        await alert.present();
+    }
+
     async handleDefaultError(errorObj) {
         let alert = await this.alertCtrl.create({
             header: 'Erro ' + errorObj.status + ': ' + errorObj.error,
@@ -67,6 +82,14 @@ export class ErrorInterceptor implements HttpInterceptor {
             ]
         });
         await alert.present();        
+    }
+
+    private listErrors(messages: FieldMessage[]): string {
+        let s: string = '';
+        for (var i=0; i<messages.length; i++) {
+            s = s + '<p><strong>' + messages[i].fieldName + "</strong>: " + messages[i].message + '</p>';     
+        }
+        return s;
     }
 
 }

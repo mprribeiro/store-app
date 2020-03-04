@@ -1,7 +1,7 @@
 import { StorageService } from './../storage.service';
 import { API_CONFIG } from './../../config/api.config';
-import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ClientDTO } from 'src/models/client.dto';
 
@@ -13,5 +13,12 @@ export class ClientService {
 
     fiendByEmail(email: String): Observable<ClientDTO> {   
         return this.http.get<ClientDTO>(`${API_CONFIG.baseUrl}/clients/email?value=${email}`);
+    }
+
+    insert(obj: ClientDTO) {
+        return this.http.post(`${API_CONFIG.baseUrl}/clients`, obj, {
+            observe: 'response',
+            responseType: 'text'
+        })
     }
 }
