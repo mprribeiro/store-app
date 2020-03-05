@@ -23,10 +23,4 @@ export class CategoriesPage {
     error => {});
   }
 
-  showProducts(category_id: string) {
-    let data = JSON.stringify(category_id);
-    this.router.navigate(['/products', data]);
-
-  }
-
 }

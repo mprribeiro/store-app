@@ -1,3 +1,4 @@
+import { CartService } from './../services/domain/cart.service';
 import { ProductService } from './../services/domain/product.service';
 import { ClientService } from './../services/domain/client.service';
 import { StorageService } from './../services/storage.service';
@@ -38,6 +39,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AuthService,
     ClientService,
     ProductService,
+    CartService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AuthInterceptorProvider,
     ErrorInterceptorProvider

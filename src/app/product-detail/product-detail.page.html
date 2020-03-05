@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Product Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-card>
+    <img src="assets/icon/m.jpg">
+    <ion-card-header>
+      <ion-card-subtitle style="text-align: center;">{{item?.price | currency}}</ion-card-subtitle>
+      <ion-card-title style="text-align: center;">{{item?.name}}</ion-card-title>
+    </ion-card-header>
+  </ion-card>
+  <ion-button color="dark" expand="block">Add to List</ion-button>
+</ion-content>

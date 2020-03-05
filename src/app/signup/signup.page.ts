@@ -26,7 +26,7 @@ export class SignupPage implements OnInit {
     public navCtrl: NavController) { 
     this.formGroup = this.formBuilder.group({
       name: ['Thomas' , [Validators.required, Validators.minLength(5), Validators.maxLength(120)]],
-      email: ['thomas@gmail.com.br', [Validators.required, Validators.email]],
+      email: ['thomas@gmail.com', [Validators.required, Validators.email]],
       type : ['1', [Validators.required]],
       register : ['06134596280', [Validators.required, Validators.minLength(11), Validators.maxLength(14)]],
       password : ['123', [Validators.required]],

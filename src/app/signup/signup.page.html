@@ -1,11 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <ion-row>
-      <ion-button color="dark" routerLink="">
-        <ion-icon name="return-down-back-outline"></ion-icon>
-      </ion-button>
-      <ion-title>Signup</ion-title>
-    </ion-row>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Signup</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -15,7 +13,8 @@
     <ion-item>
       <ion-input formControlName="name" type="text" placeholder="Name*" autocomplete="on"></ion-input>
     </ion-item>
-    <p class="danger" *ngIf="formGroup.controls.name.dirty && formGroup.controls.name.errors" margin-left>Invalid value!</p>
+    <p class="danger" *ngIf="formGroup.controls.name.dirty && formGroup.controls.name.errors" margin-left>Invalid value!
+    </p>
 
     <ion-item>
       <ion-input formControlName="email" type="text" placeholder="Email*"></ion-input>

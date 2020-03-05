@@ -10,7 +10,7 @@
 <ion-content padding>
   <ion-list>
     <ion-item *ngFor="let item of items">
-      <button ion-thumbnail slot="start" (click)="showProducts(item.id)">
+      <button ion-thumbnail slot="start" routerLink="/products" [queryParams]="{id: item.id}">
         <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
       </button>
       <h3>{{item.name}}</h3>
