@@ -27,6 +27,10 @@ export class AppComponent {
       url: '/products'
     },
     {
+      title: 'Cart',
+      url: '/cart'
+    },
+    {
       title: 'Logout',
       url: ''
     }

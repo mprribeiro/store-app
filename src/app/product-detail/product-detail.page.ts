@@ -1,3 +1,5 @@
+import { NavController } from '@ionic/angular';
+import { CartService } from './../../services/domain/cart.service';
 import { ProductService } from './../../services/domain/product.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -12,7 +14,8 @@ export class ProductDetailPage {
 
   item: ProductDTO;
 
-  constructor(public activatedRoute: ActivatedRoute, public productService: ProductService) { }
+  constructor(public activatedRoute: ActivatedRoute, public productService: ProductService, public cartService: CartService,
+    public navCtrl:NavController) { }
 
   ionViewDidEnter() {
     let product_id = this.activatedRoute.snapshot.queryParams['id'];
@@ -21,6 +24,11 @@ export class ProductDetailPage {
         this.item = response;
       },
         error => { });
+  }
+
+  addToCartItem(product: ProductDTO) {
+    this.cartService.addProduct(product);
+    this.navCtrl.navigateRoot("'/cart'");
   }
 
 }

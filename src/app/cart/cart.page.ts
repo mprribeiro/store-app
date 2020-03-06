@@ -1,3 +1,6 @@
+import { CartService } from './../../services/domain/cart.service';
+import { StorageService } from './../../services/storage.service';
+import { CartItem } from './../../models/cart-item';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -5,11 +8,15 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './cart.page.html',
   styleUrls: ['./cart.page.scss'],
 })
-export class CartPage implements OnInit {
+export class CartPage {
 
-  constructor() { }
+  items: CartItem[];
 
-  ngOnInit() {
+  constructor(public cartService: CartService) { }
+
+  ionViewDidEnter() {
+    let cart = this.cartService.getCart();
+    this.items = cart.items;
   }
 
 }
