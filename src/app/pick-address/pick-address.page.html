@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Close Order - Address</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      Pick an Address
+    </ion-list-header>
+    <ion-item *ngFor="let item of items">
+      <button ion-thumbnail>
+        <ion-icon name="home" size="large"></ion-icon>
+      </button>
+      <ion-label style="padding-left: 20px;">
+        <h2>{{item.street}}, {{item.number}}</h2>
+        <p>{{item.complement}} {{item.neighborhood}} CEP {{item.cep}}</p>
+        <p>{{item.city.name}}, {{item.city.state.name}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

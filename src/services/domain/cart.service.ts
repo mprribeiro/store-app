@@ -59,6 +59,9 @@ export class CartService {
         let position = cart.items.findIndex(x => x.product.id == product.id);
         if (position != -1) {
             cart.items[position].quantity--;
+            if(cart.items[position].quantity < 1) {
+                cart = this.removeProduct(product);
+            }
         }
         this.storage.setCart(cart);
         return cart;

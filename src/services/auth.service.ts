@@ -1,3 +1,4 @@
+import { CartService } from './domain/cart.service';
 import { AlertController, NavController } from '@ionic/angular';
 import { StorageService } from './storage.service';
 import { LocalUser } from './../models/local_user';
@@ -16,7 +17,8 @@ export class AuthService {
         public http: HttpClient, 
         public storage: StorageService, 
         public alertCtrl: AlertController,
-        public navCtrl: NavController) {
+        public navCtrl: NavController,
+        public cartService: CartService) {
     }
 
     authenticate(creds: CredentialsDTO) {
@@ -46,6 +48,7 @@ export class AuthService {
             email: this.jwtHelper.decodeToken(token).sub
         };
         this.storage.setLocalUser(user);
+        this.cartService.createOrClearCart();
     }
 
     async logout(page: string) {

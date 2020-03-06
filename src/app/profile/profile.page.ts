@@ -24,7 +24,7 @@ export class ProfilePage implements OnInit {
     if (localUser && localUser.email) {
       this.clientService.fiendByEmail(localUser.email)
       .subscribe(response => {
-        this.client = response;
+        this.client = response as ClientDTO;
       },
       error => {
         if (error.status == 403) {
