@@ -1,5 +1,5 @@
+import { ProductDTO } from './../../models/product.dto';
 import { CartService } from './../../services/domain/cart.service';
-import { StorageService } from './../../services/storage.service';
 import { CartItem } from './../../models/cart-item';
 import { Component, OnInit } from '@angular/core';
 
@@ -17,6 +17,22 @@ export class CartPage {
   ionViewDidEnter() {
     let cart = this.cartService.getCart();
     this.items = cart.items;
+  }
+
+  remove(product: ProductDTO) {
+    this.items = this.cartService.removeProduct(product).items;
+  }
+
+  increase(product: ProductDTO) {
+    this.items = this.cartService.increaseQuantity(product).items;
+  }
+
+  decrease(product: ProductDTO) {
+    this.items = this.cartService.decreaseQuantity(product).items;
+  }
+
+  total(): number {
+    return this.cartService.total();
   }
 
 }

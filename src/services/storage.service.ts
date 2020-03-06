@@ -23,20 +23,22 @@ export class StorageService {
         }
     }
 
-    getCart(): Cart {
-        let cart = localStorage.getItem(STORAGE_KEYS.cart);
-        if (cart == null) {
+    getCart() : Cart {
+        let str = localStorage.getItem(STORAGE_KEYS.cart);
+        if (str != null) {
+            return JSON.parse(str);
+        }
+        else {
             return null;
-        } else {
-            return JSON.parse(cart);
         }
     }
 
-    setCart(obj : Cart) { 
-        if (obj == null) {
-            localStorage.removeItem(STORAGE_KEYS.cart);
-        } else {
+    setCart(obj : Cart) {
+        if (obj != null) {
             localStorage.setItem(STORAGE_KEYS.cart, JSON.stringify(obj));
+        } 
+        else {
+            localStorage.removeItem(STORAGE_KEYS.cart);
         }
     }
 }

@@ -26,9 +26,9 @@ export class ProductDetailPage {
         error => { });
   }
 
-  addToCartItem(product: ProductDTO) {
+  addToCart(product: ProductDTO) {
     this.cartService.addProduct(product);
-    this.navCtrl.navigateRoot("'/cart'");
+    this.navCtrl.navigateRoot("/cart");
   }
 
 }

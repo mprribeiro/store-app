@@ -23,10 +23,6 @@ export class AppComponent {
       url: '/profile'
     },
     {
-      title: 'Products',
-      url: '/products'
-    },
-    {
       title: 'Cart',
       url: '/cart'
     },
