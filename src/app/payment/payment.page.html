@@ -9,26 +9,29 @@
 
 <ion-content>
   <form [formGroup]="formGroup" (ngSubmit)="nextPage(); $event.preventDefault()">
-    <ion-list radio-group formControlName="@type">
-      <ion-list-header>
-        Payment type
-      </ion-list-header>
-      <ion-item>
-        <ion-label>Payment with Card</ion-label>
-        <ion-radio checked="true" value="paymentWithCard"></ion-radio>
-      </ion-item>
-      <ion-item>
-        <ion-label>Payment with Slip</ion-label>
-        <ion-radio value="paymentWithSlip"></ion-radio>
-      </ion-item>
+    <ion-list>
+      <ion-radio-group formControlName="@type">
+        <ion-list-header>
+          Payment type
+        </ion-list-header>
+        <ion-item>
+          <ion-label>Payment with Card</ion-label>
+          <ion-radio checked="true" value="paymentWithCard"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>Payment with Slip</ion-label>
+          <ion-radio value="paymentWithSlip" formControlName="@type"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+
     </ion-list>
 
     <ion-item *ngIf="formGroup.value['@type'] == 'paymentWithCard'">
-      <ion-label stacked>Slip installments</ion-label>
+      <ion-label stacked>Card installments</ion-label>
       <ion-select formControlName="installments">
-        <ion-option *ngFor="let n of installments; first as f" [value]="n" [selected]="f">{{n}}</ion-option>
+        <ion-select-option *ngFor="let n of installments" [value]="n">{{n}}</ion-select-option>
       </ion-select>
     </ion-item>
-    <button ion-button block type="submit" [disabled]="formGroup.invalid">Next</button>
+    <ion-button color="dark" expand="block" type="submit" [disabled]="formGroup.invalid">Next</ion-button>
   </form>
 </ion-content>

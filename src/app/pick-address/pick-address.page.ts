@@ -4,7 +4,7 @@ import { NavController } from '@ionic/angular';
 import { StorageService } from './../../services/storage.service';
 import { ClientService } from './../../services/domain/client.service';
 import { AddressDTO } from './../../models/address.dto';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { orderDTO } from 'src/models/order.dto';
 
 @Component({
@@ -52,7 +52,7 @@ export class PickAddressPage {
 
   nextPage(item: AddressDTO) {
     this.order.deliveryAddress = {id: item.id};
-    this.router.navigate(['/payment'], {order: this.order});
+    this.router.navigateByUrl('/payment', {state: {order: this.order}});
   }
 
 }
