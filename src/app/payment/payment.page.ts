@@ -1,9 +1,8 @@
-import { paymentDTO } from './../../models/payment.dto';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NavController, NavParams } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { orderDTO } from 'src/models/order.dto';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-payment',
@@ -18,7 +17,7 @@ export class PaymentPage implements OnInit {
 
   constructor(public navCtrl: NavController,
     public formBuilder: FormBuilder,
-    public activatedRoute: ActivatedRoute) { 
+    public router: Router) { 
 
       this.formGroup = this.formBuilder.group({
         installments: [1, Validators.required],
@@ -32,7 +31,7 @@ export class PaymentPage implements OnInit {
 
   nextPage() {
     this.order.payment = this.formGroup.value;
-    console.log(this.order);
+    this.router.navigateByUrl('/order-confirmation', {state: {order: this.order}});
   }
 
 }

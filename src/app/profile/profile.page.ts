@@ -22,7 +22,7 @@ export class ProfilePage implements OnInit {
   ionViewWillEnter() {
     let localUser = this.storage.getLocalUser();
     if (localUser && localUser.email) {
-      this.clientService.fiendByEmail(localUser.email)
+      this.clientService.findByEmail(localUser.email)
       .subscribe(response => {
         this.client = response as ClientDTO;
       },

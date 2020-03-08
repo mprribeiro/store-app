@@ -26,7 +26,7 @@ export class PickAddressPage {
   ionViewDidEnter() {
     let localUser = this.storage.getLocalUser();
     if (localUser && localUser.email) {
-      this.clientService.fiendByEmail(localUser.email)
+      this.clientService.findByEmail(localUser.email)
         .subscribe(response => {
           this.items = response['addresses'] ;
 
