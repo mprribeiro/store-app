@@ -13,7 +13,7 @@
       Pick an Address
     </ion-list-header>
     <ion-item *ngFor="let item of items">
-      <button ion-thumbnail>
+      <button ion-thumbnail (click)="nextPage(item)" routerLink="/payment">
         <ion-icon name="home" size="large"></ion-icon>
       </button>
       <ion-label style="padding-left: 20px;">

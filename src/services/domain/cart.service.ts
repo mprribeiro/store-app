@@ -26,7 +26,6 @@ export class CartService {
     addProduct(product: ProductDTO): Cart {
         let cart: Cart = this.getCart();
         let position = cart.items.findIndex(x => x.product.id == product.id);
-        console.log("Position: " + position)
         if (position == -1) {
             cart.items.push({quantity: 1, product: product});
         }
