@@ -1,3 +1,4 @@
+import { StorageService } from './../../services/storage.service';
 import { NavController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './payment.page.html',
   styleUrls: ['./payment.page.scss'],
 })
-export class PaymentPage implements OnInit {
+export class PaymentPage {
 
   order: orderDTO;
   installments: number[] =  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -17,7 +18,8 @@ export class PaymentPage implements OnInit {
 
   constructor(public navCtrl: NavController,
     public formBuilder: FormBuilder,
-    public router: Router) { 
+    public router: Router,
+    public storage: StorageService) { 
 
       this.formGroup = this.formBuilder.group({
         installments: [1, Validators.required],
@@ -25,13 +27,11 @@ export class PaymentPage implements OnInit {
       });
     }
 
-  ngOnInit() {
-    this.order = history.state['order'];
-  }
-
   nextPage() {
+    this.order = this.storage.getOrder();
     this.order.payment = this.formGroup.value;
-    this.router.navigateByUrl('/order-confirmation', {state: {order: this.order}});
+    this.storage.setOrder(this.order);
+    this.router.navigate(['/order-confirmation']);
   }
 
 }

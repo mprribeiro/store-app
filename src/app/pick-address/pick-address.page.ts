@@ -17,11 +17,11 @@ export class PickAddressPage {
   items: AddressDTO[];
   order: orderDTO;
 
-  constructor(public clientService: ClientService, 
-    public storage: StorageService, 
+  constructor(public clientService: ClientService,  
     public navCtrl: NavController,
     public cartService: CartService,
-    public router: Router) { }
+    public router: Router,
+    public storage: StorageService) { }
 
   ionViewDidEnter() {
     let localUser = this.storage.getLocalUser();
@@ -50,9 +50,10 @@ export class PickAddressPage {
     }
   }
 
-  nextPage(item: AddressDTO) {
+   nextPage(item: AddressDTO) {
     this.order.deliveryAddress = {id: item.id};
-    this.router.navigateByUrl('/payment', {state: {order: this.order}});
+    this.storage.setOrder(this.order);
+    this.router.navigate(['/payment']);
   }
 
 }

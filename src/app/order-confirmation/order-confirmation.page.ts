@@ -1,5 +1,6 @@
-import { NavController } from '@ionic/angular';
+import { OrderService } from './../../services/domain/order.service';
 import { StorageService } from './../../services/storage.service';
+import { NavController } from '@ionic/angular';
 import { ClientService } from './../../services/domain/client.service';
 import { AddressDTO } from './../../models/address.dto';
 import { ClientDTO } from './../../models/client.dto';
@@ -22,13 +23,15 @@ export class OrderConfirmationPage implements OnInit {
 
   constructor(public cartService: CartService,
     public clientService: ClientService,
-    public navCtrl: NavController
-    ) { }
+    public navCtrl: NavController,
+    public storage: StorageService,
+    public orderService: OrderService
+    ) {}
 
-  ngOnInit() {
-    console.log(history.state['order']);
-    this.order = history.state['order'];
-  }
+    ngOnInit() {
+      this.order = this.storage.getOrder();
+      console.log(this.order);
+    }
 
   ionViewDidEnter() {
     this.cartItems = this.cartService.getCart().items;
@@ -46,8 +49,15 @@ export class OrderConfirmationPage implements OnInit {
     return list[position];
   }
 
-  total() {
-    this.cartService.total();
+  totalValue() {
+    return this.cartService.total();
+  }
+
+  checkout() {
+    this.orderService.insert(this.order).subscribe(response => {
+      this.cartService.createOrClearCart();
+      console.log(response.headers.get('location'));
+    })
   }
 
 }

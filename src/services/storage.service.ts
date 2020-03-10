@@ -1,3 +1,4 @@
+import { orderDTO } from './../models/order.dto';
 import { Cart } from './../models/cart';
 import { STORAGE_KEYS } from './../config/storage_keys.config';
 import { Injectable } from '@angular/core';
@@ -39,6 +40,25 @@ export class StorageService {
         } 
         else {
             localStorage.removeItem(STORAGE_KEYS.cart);
+        }
+    }
+
+    getOrder() : orderDTO {
+        let str = localStorage.getItem(STORAGE_KEYS.order);
+        if (str != null) {
+            return JSON.parse(str);
+        }
+        else {
+            return null;
+        }
+    }
+
+    setOrder(obj : orderDTO) {
+        if (obj != null) {
+            localStorage.setItem(STORAGE_KEYS.order, JSON.stringify(obj));
+        } 
+        else {
+            localStorage.removeItem(STORAGE_KEYS.order);
         }
     }
 }

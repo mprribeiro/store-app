@@ -1,3 +1,4 @@
+import { OrderService } from './../services/domain/order.service';
 import { CartService } from './../services/domain/cart.service';
 import { ProductService } from './../services/domain/product.service';
 import { ClientService } from './../services/domain/client.service';
@@ -40,10 +41,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ClientService,
     ProductService,
     CartService,
+    OrderService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AuthInterceptorProvider,
     ErrorInterceptorProvider
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
