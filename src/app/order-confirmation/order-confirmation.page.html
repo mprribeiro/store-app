@@ -3,77 +3,94 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Order Confirmation</ion-title>
+    <ion-title *ngIf="orderCode">Order Confirmation</ion-title>
+    <ion-title *ngIf="!orderCode">Check your order</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-card >
-    <ion-card-header color="dark" style="font-weight: bolder; font-size:15px">
-      Order Items
-    </ion-card-header>
 
-    <ion-list>
-      <ion-item *ngFor="let item of cartItems">
-        <ion-thumbnail item-start>
-          <img [src]="item.product.imageUrl || 'assets/icon/m.jpg'">
-        </ion-thumbnail>
+  <div *ngIf="!orderCode">
+    <ion-card>
+      <ion-card-header color="dark" style="font-weight: bolder; font-size:15px">
+        Order Items
+      </ion-card-header>
+
+      <ion-list>
+        <ion-item *ngFor="let item of cartItems">
+          <ion-thumbnail item-start>
+            <img [src]="item.product.imageUrl || 'assets/icon/m.jpg'">
+          </ion-thumbnail>
+          <ion-label>
+            <h2 style="padding-left: 20px;">{{item.product.name}}</h2>
+            <p style="padding-left: 20px;">{{item.product.price | currency}}, Quantity: {{item.quantity}}</p>
+            <p style="padding-left: 20px;">Sub total: {{item.product.price * item.quantity | currency}}</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <h2>Total: </h2>
+          <h2 style="width: 100%; text-align:right;"> {{totalValue() | currency}} </h2>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header color="dark" style="font-weight: bolder; font-size:15px">
+        Client
+      </ion-card-header>
+      <ion-item>
         <ion-label>
-          <h2 style="padding-left: 20px;">{{item.product.name}}</h2>
-          <p style="padding-left: 20px;">{{item.product.price | currency}}, Quantity: {{item.quantity}}</p>
-          <p style="padding-left: 20px;">Sub total: {{item.product.price * item.quantity | currency}}</p>
+          <h2>{{client?.name}}</h2>
+          <p>{{client?.email}}</p>
+        </ion-label>
+      </ion-item>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header color="dark" style="font-weight: bolder; font-size:15px">
+        Delivery Address
+      </ion-card-header>
+
+      <ion-item>
+        <ion-label>
+          <h2>{{address?.street}}, {{address?.number}}</h2>
+          <p>{{address?.complement}} {{address?.neighborhood}} CEP {{address?.cep}}</p>
+          <p>{{address?.city.name}}, {{address?.city.state.name}}</p>
+        </ion-label>
+      </ion-item>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header color="dark" style="font-weight: bolder; font-size:15px">
+        Payment
+      </ion-card-header>
+
+      <ion-item *ngIf="order.payment['@type'] == 'paymentWithCard'">
+        <ion-label>
+          <h2>Payment with Card</h2>
+          <p>Installments: {{order.payment.installments}}</p>
         </ion-label>
       </ion-item>
 
-      <ion-item>
-        <h2>Total: </h2>
-        <h2 style="width: 100%; text-align:right;"> {{totalValue() | currency}} </h2>
+      <ion-item *ngIf="order.payment['@type'] == 'paymentWithSlip'">
+        <h2>Payment with Slip</h2>
       </ion-item>
-    </ion-list>
-  </ion-card>
+    </ion-card>
 
-  <ion-card>
+    <ion-button color="dark" expand="block" (click)="checkout()">Checkout</ion-button>
+  </div>
+
+  <ion-card *ngIf="orderCode">
     <ion-card-header color="dark" style="font-weight: bolder; font-size:15px">
-      Client
+      Your order had been registered!
     </ion-card-header>
     <ion-item>
       <ion-label>
-        <h2>{{client?.name}}</h2>
-        <p>{{client?.email}}</p>
+        <h1>Order code: {{orderCode}}</h1>
+        <h2>Check your email.</h2>
       </ion-label>
     </ion-item>
   </ion-card>
 
-  <ion-card>
-    <ion-card-header color="dark" style="font-weight: bolder; font-size:15px">
-      Delivery Address
-    </ion-card-header>
-
-    <ion-item>
-      <ion-label>
-        <h2>{{address?.street}}, {{address?.number}}</h2>
-        <p>{{address?.complement}} {{address?.neighborhood}} CEP {{address?.cep}}</p>
-        <p>{{address?.city.name}}, {{address?.city.state.name}}</p>
-      </ion-label>
-    </ion-item>
-  </ion-card>
-
-  <ion-card>
-    <ion-card-header color="dark" style="font-weight: bolder; font-size:15px">
-      Payment
-    </ion-card-header>
-
-    <ion-item *ngIf="order.payment['@type'] == 'paymentWithCard'">
-      <ion-label>
-      <h2>Payment with Card</h2>
-      <p>Installments: {{order.payment.installments}}</p>
-      </ion-label>
-    </ion-item>
-
-    <ion-item *ngIf="order.payment['@type'] == 'paymentWithSlip'">
-      <h2>Payment with Slip</h2>
-    </ion-item>
-  </ion-card>
-
-  <ion-button color="dark" expand="block" (click)="checkout()">Checkout</ion-button>
 </ion-content>

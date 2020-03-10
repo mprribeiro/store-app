@@ -20,6 +20,7 @@ export class OrderConfirmationPage implements OnInit {
   cartItems: CartItem[];
   client: ClientDTO;
   address: AddressDTO;
+  orderCode: String;
 
   constructor(public cartService: CartService,
     public clientService: ClientService,
@@ -56,8 +57,13 @@ export class OrderConfirmationPage implements OnInit {
   checkout() {
     this.orderService.insert(this.order).subscribe(response => {
       this.cartService.createOrClearCart();
-      console.log(response.headers.get('location'));
+      this.orderCode = this.extractId(response.headers.get('location'));
     })
+  }
+
+  private extractId(location: String): String {
+    let position = location.lastIndexOf('/');
+    return location.substring(position + 1, location.length);
   }
 
 }
