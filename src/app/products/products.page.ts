@@ -11,11 +11,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductsPage implements OnInit {
 
-  items: ProductDTO[];
+  items: ProductDTO[] = [];
+  page: number = 0;
 
-  constructor(public activateRoute: ActivatedRoute, 
+  constructor(public activateRoute: ActivatedRoute,
     public productService: ProductService,
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public router: Router,
     public loadingController: LoadingController) { }
 
@@ -23,12 +24,16 @@ export class ProductsPage implements OnInit {
   }
 
   ionViewDidEnter() {
+    this.loadData();
+  }
+
+  loadData() {
     let category_id = this.activateRoute.snapshot.queryParams['id'];
     let loader = this.presentLoading();
-    this.productService.findByCategory(category_id)
+    this.productService.findByCategory(category_id, this.page, 10)
       .subscribe(response => {
         this.loaderDismiss(loader);
-        this.items = response['content'];
+        this.items = this.items.concat(response['content']);
       },
         error => { });
   }
@@ -42,7 +47,28 @@ export class ProductsPage implements OnInit {
     return loader;
   }
 
-  async loaderDismiss(loader){
+  async loaderDismiss(loader) {
     loader = await this.loadingController.dismiss();
- }
+    return loader;
+  }
+
+  doRefresh(event) {
+    this.page = 0;
+    this.items = [];
+    this.loadData();
+    setTimeout(() => {
+      event.target.complete();
+    }, 1000);
+  }
+
+  doInfinity(event) {
+    setTimeout(() => {
+      event.target.complete();
+
+      if (this.items.length == 1000) {
+        event.target.disabled = true;
+      }
+    }, 500);
+  }
+
 }
