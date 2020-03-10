@@ -17,4 +17,16 @@
       <ion-card-subtitle>{{client?.email}}</ion-card-subtitle>
     </ion-card-header>
   </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      Send profile image
+    </ion-card-header>
+    <ion-item *ngIf="picture">
+      <img [src]="picture">
+    </ion-item>
+    <ion-item>
+      <ion-button color="dark" expand="block" (click)="getCameraPicture()" [disabled]="cameraOn">Camera</ion-button>
+    </ion-item>
+  </ion-card>  
 </ion-content>

@@ -21,6 +21,8 @@ import { HttpModule } from '@angular/http';
 import { AuthInterceptorProvider } from 'src/interceptors/auth-interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { Camera } from '@ionic-native/camera/ngx';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -44,7 +46,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     OrderService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AuthInterceptorProvider,
-    ErrorInterceptorProvider
+    ErrorInterceptorProvider,
+    Camera
   ],
   bootstrap: [AppComponent],
 })
