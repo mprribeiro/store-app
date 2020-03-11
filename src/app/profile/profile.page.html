@@ -8,25 +8,27 @@
 </ion-header>
 
 <ion-content>
-  <ion-card>
-    <ion-avatar>
-      <img [src]="client?.imageUrl || 'assets/icon/user.jpg'">
-    </ion-avatar>
+  <ion-card fullscreen>
+    <ion-img [src]="picture || 'assets/icon/user.jpg'"></ion-img>
+  </ion-card>
+
+  <ion-card fullscreen>
     <ion-card-header>
-      <ion-card-title>{{client?.name}}</ion-card-title>
-      <ion-card-subtitle>{{client?.email}}</ion-card-subtitle>
+      <ion-card-title style="text-align: center;">{{client?.name}}</ion-card-title>
+      <ion-card-subtitle style="text-align: center;">{{client?.email}}</ion-card-subtitle>
     </ion-card-header>
   </ion-card>
 
-  <ion-card>
+  <ion-card fullscreen>
+    <ion-img *ngIf="picture" [src]="picture"></ion-img>
+  </ion-card>
+
+  <ion-card fullscreen>
     <ion-card-header>
-      Send profile image
+      <ion-card-title>Send profile image</ion-card-title>
     </ion-card-header>
-    <ion-item *ngIf="picture">
-      <img [src]="picture">
-    </ion-item>
-    <ion-item>
+    <ion-card-content>
       <ion-button color="dark" expand="block" (click)="getCameraPicture()" [disabled]="cameraOn">Camera</ion-button>
-    </ion-item>
-  </ion-card>  
+    </ion-card-content>
+  </ion-card>
 </ion-content>
