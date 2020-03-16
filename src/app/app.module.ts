@@ -5,7 +5,6 @@ import { ClientService } from './../services/domain/client.service';
 import { StorageService } from './../services/storage.service';
 import { AuthService } from './../services/auth.service';
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http'
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -22,6 +21,7 @@ import { AuthInterceptorProvider } from 'src/interceptors/auth-interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { Camera } from '@ionic-native/camera/ngx';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [AppComponent],

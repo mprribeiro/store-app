@@ -97,6 +97,11 @@
       </ion-select>
     </ion-item>
 
-    <ion-button block type="submit" [disabled]="formGroup.invalid">Create account</ion-button>
+    <ion-card fullscreen>
+      <ion-img *ngIf="picture != ''" [src]="picture"></ion-img>
+      <input type="file" formControlName="clientImg" (click)="getCameraPicture()" style="display: none;">
+    </ion-card>
+
+    <ion-button color="dark" expand="block" type="submit" [disabled]="formGroup.invalid">Create account</ion-button>
   </form>
 </ion-content>

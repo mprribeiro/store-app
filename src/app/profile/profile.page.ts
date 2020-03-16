@@ -4,6 +4,7 @@ import { ClientDTO } from './../../models/client.dto';
 import { StorageService } from './../../services/storage.service';
 import { Component } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-profile',
@@ -12,13 +13,6 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 })
 export class ProfilePage {
 
-  options: CameraOptions = {
-    quality: 100,
-    destinationType: this.camera.DestinationType.DATA_URL,
-    encodingType: this.camera.EncodingType.JPEG,
-    mediaType: this.camera.MediaType.PICTURE
-  }
-
   client: ClientDTO;
   picture: String;
   cameraOn: boolean = false;
@@ -26,7 +20,8 @@ export class ProfilePage {
   constructor(public storage: StorageService,
     public clientService: ClientService,
     public navCtrl: NavController,
-    private camera: Camera) { }
+    private camera: Camera,
+    private sanitizer: DomSanitizer) { }
 
   ionViewWillEnter() {
     let localUser = this.storage.getLocalUser();
@@ -34,6 +29,7 @@ export class ProfilePage {
       this.clientService.findByEmail(localUser.email)
         .subscribe(response => {
           this.client = response as ClientDTO;
+          this.picture = 'data:image/png;base64,' + this.client.clientImg;
         },
           error => {
             if (error.status == 403) {
@@ -47,20 +43,65 @@ export class ProfilePage {
 
   getCameraPicture() {
     this.cameraOn = true;
-    console.log('entrei 1');
 
-    this.camera.getPicture(this.options).then((imageData) => {
-      this.picture = 'data:image/jpeg;base64,' + imageData;
-      this.cameraOn = false;
-      console.log('entrei 2');
-    }, (error) => {});
+    const options: CameraOptions = {
+      quality: 50,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.PNG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
 
-    /*this.camera.getPicture(this.options).then((imageData) => {
-      let base64Image = 'data:image/jpeg;base64,' + imageData;
-      this.picture = base64Image;
+    this.camera.getPicture(options).then((imageData) => {
+      this.picture = 'data:image/png;base64,' + imageData;
+      let formData = new FormData();
+      const byteCharacters = atob(imageData);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], {type: 'image/png'});
+      formData.append("file", blob, `client_${this.client.id}.png`);
+      this.clientService.updateImg(formData, this.client.id).subscribe(response => {
+        console.log(response);
+      })
       this.cameraOn = false;
-      console.log('entrei 2');
     }, (error) => {
-    });*/
+      this.cameraOn = false;
+    });
   }
+
+  getGalleryPicture() {
+    this.cameraOn = true;
+
+    const options: CameraOptions = {
+      quality: 100,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.PNG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+
+    this.camera.getPicture(options).then((imageData) => {
+      this.picture = 'data:image/png;base64,' + imageData;
+      let formData = new FormData();
+      const byteCharacters = atob(imageData);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], {type: 'image/png'});
+      formData.append("file", blob, `client_${this.client.id}.png`);
+      this.clientService.updateImg(formData, this.client.id).subscribe(response => {
+        console.log(response);
+      })
+      this.cameraOn = false;
+    }, (error) => {
+      this.cameraOn = false;
+    });
+  }
+
+
+
 }
