@@ -16,7 +16,7 @@ export class AppComponent {
   public pages = [
     {
       title: 'Categories',
-      url: '/categories',
+      url: '/categories', 
     },
     {
       title: 'Profile',
